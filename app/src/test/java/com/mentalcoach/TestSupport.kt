@@ -1,5 +1,6 @@
 package com.mentalcoach
 
+import com.mentalcoach.domain.CheckinQuestion
 import com.mentalcoach.domain.ExerciseLibrary
 import com.mentalcoach.domain.Lang
 import com.mentalcoach.media.PhotoStore
@@ -80,6 +81,20 @@ object TestStrings : VisitStrings {
         total: Int,
         text: String,
     ) = "Step $number of $total. $text"
+
+    override fun questionTitle(
+        lang: Lang,
+        q: CheckinQuestion,
+    ) = "Question ${q.id}?"
+
+    override fun questionOptions(
+        lang: Lang,
+        q: CheckinQuestion,
+    ) = when (q) {
+        CheckinQuestion.TIME -> listOf("30 minutes", "60 minutes", "90 minutes", "More than 90 minutes", "I'll go with the flow")
+        CheckinQuestion.LEAVE_BEHIND -> listOf("Stress and tension", "Brooding", "Worries", "Self-doubt", "None of these")
+        else -> listOf("Calmer and more relaxed", "More hopeful", "Braver")
+    }
 
     override fun crisisDefault(lang: Lang) = "Default crisis text."
 

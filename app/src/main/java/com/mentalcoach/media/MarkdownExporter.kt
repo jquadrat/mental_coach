@@ -1,5 +1,6 @@
 package com.mentalcoach.media
 
+import com.mentalcoach.data.api.Prompts
 import com.mentalcoach.domain.Role
 import com.mentalcoach.domain.Visit
 import java.time.Duration
@@ -62,6 +63,12 @@ class MarkdownExporter(
         lines += listOf("## Check-in", "", "> " + v.mood.replace("\n", "\n> "), "")
         v.checkin?.let {
             lines += "Coach reading: ${it.summary} Mood ${it.mood}/10, energy ${it.energy}/10. Feelings: ${it.feelings.joinToString(", ")}."
+            lines += ""
+        }
+        if (v.answers.isNotEmpty()) {
+            lines += "Check-in questions:"
+            lines += ""
+            v.answers.forEach { lines += "- ${Prompts.QUESTION_TEXT[it.question] ?: it.question}: ${Prompts.answerText(it)}" }
             lines += ""
         }
         lines += listOf("## Exercises", "")

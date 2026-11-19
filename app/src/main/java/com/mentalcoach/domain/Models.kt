@@ -147,6 +147,8 @@ data class Visit(
     val screen: Screen = Screen.CHECKIN,
     val checkin: CheckinReading? = null,
     val greeting: String? = null,
+    /** Answers to the check-in questions. */
+    val answers: List<CheckinAnswer> = emptyList(),
     val exercises: List<ExerciseRun> = emptyList(),
     val suggestion: Suggestion? = null,
     val logbook: Logbook? = null,

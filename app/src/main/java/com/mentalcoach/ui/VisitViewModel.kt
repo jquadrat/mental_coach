@@ -9,6 +9,9 @@ import com.mentalcoach.data.repo.VisitRepository
 import com.mentalcoach.data.settings.Settings
 import com.mentalcoach.data.settings.SettingsRepository
 import com.mentalcoach.domain.ChatTurn
+import com.mentalcoach.domain.CheckinAnswer
+import com.mentalcoach.domain.CheckinAnswers
+import com.mentalcoach.domain.CheckinQuestion
 import com.mentalcoach.domain.CheckinReading
 import com.mentalcoach.domain.Exercise
 import com.mentalcoach.domain.ExerciseLibrary
@@ -61,6 +64,16 @@ interface VisitStrings {
 
     fun crisisDefault(lang: Lang): String
 
+    fun questionTitle(
+        lang: Lang,
+        q: CheckinQuestion,
+    ): String
+
+    fun questionOptions(
+        lang: Lang,
+        q: CheckinQuestion,
+    ): List<String>
+
     fun crisisStaff(lang: Lang): String
 }
 
@@ -78,7 +91,13 @@ data class CheckinDraft(
     val consent: Boolean = false,
     val profilePhoto: String? = null,
     val previousContext: String? = null,
-)
+    /** -1 while filling in the form; otherwise the index of the check-in question being asked. */
+    val questionStep: Int = -1,
+    val picks: Map<CheckinQuestion, Set<Int>> = emptyMap(),
+    val spoken: Map<CheckinQuestion, String> = emptyMap(),
+) {
+    val question: CheckinQuestion? get() = CheckinQuestion.entries.getOrNull(questionStep)
+}
 
 enum class Busy { CHECKIN, REFLECT, LOGBOOK }
 
@@ -182,7 +201,7 @@ class VisitViewModel
 
         fun retry() {
             when (_state.value.error?.retry) {
-                RetryAction.CHECKIN -> submitCheckin()
+                RetryAction.CHECKIN -> sendCheckin()
                 RetryAction.REFLECT -> sendChat()
                 RetryAction.LOGBOOK -> endVisit()
                 null -> Unit
@@ -245,6 +264,7 @@ class VisitViewModel
             _state.update { it.copy(draft = it.draft.copy(profilePhoto = null)) }
         }
 
+        /** The form's button: validates it, then starts the check-in questions. */
         fun submitCheckin() {
             val st = _state.value
             if (st.busy != null) return
@@ -260,6 +280,76 @@ class VisitViewModel
                 _state.update { it.copy(error = UiError(err)) }
                 return
             }
+            goToQuestion(0)
+        }
+
+        private fun goToQuestion(step: Int) {
+            _state.update { it.copy(draft = it.draft.copy(questionStep = step), error = null) }
+            CheckinQuestion.entries.getOrNull(step)?.let { speak(strings.questionTitle(_state.value.lang, it)) }
+        }
+
+        fun togglePick(
+            q: CheckinQuestion,
+            option: Int,
+        ) = _state.update {
+            val cur = it.draft.picks[q].orEmpty()
+            val next =
+                when {
+                    option in cur -> cur - option
+                    q.multi -> cur + option
+                    else -> setOf(option)
+                }
+            it.copy(draft = it.draft.copy(picks = it.draft.picks + (q to next)))
+        }
+
+        /** Live transcript while the visitor speaks an answer. */
+        fun updateSpoken(
+            q: CheckinQuestion,
+            text: String,
+        ) = _state.update { it.copy(draft = it.draft.copy(spoken = it.draft.spoken + (q to text))) }
+
+        /** The visitor finished speaking: keep their words, pick the options they named, and ask the next question. */
+        fun answerSpoken(
+            q: CheckinQuestion,
+            text: String,
+        ) {
+            if (text.isBlank() || _state.value.draft.question != q) return
+            val options = strings.questionOptions(_state.value.lang, q)
+            _state.update {
+                val cur = it.draft.picks[q].orEmpty()
+                val picks =
+                    if (q.multi) {
+                        cur + CheckinAnswers.match(text, options)
+                    } else {
+                        CheckinAnswers.best(text, options)?.let { b -> setOf(b) } ?: cur
+                    }
+                it.copy(draft = it.draft.copy(spoken = it.draft.spoken + (q to text.trim()), picks = it.draft.picks + (q to picks)))
+            }
+            nextQuestion()
+        }
+
+        fun nextQuestion() {
+            val step = _state.value.draft.questionStep
+            if (step + 1 < CheckinQuestion.entries.size) goToQuestion(step + 1) else sendCheckin()
+        }
+
+        fun previousQuestion() {
+            speech.stop()
+            goToQuestion(_state.value.draft.questionStep - 1)
+        }
+
+        private fun answers(lang: Lang): List<CheckinAnswer> {
+            val d = _state.value.draft
+            return CheckinQuestion.entries.map { q ->
+                val labels = strings.questionOptions(lang, q)
+                CheckinAnswer(q.id, d.picks[q].orEmpty().sorted().mapNotNull { labels.getOrNull(it) }, d.spoken[q].orEmpty())
+            }
+        }
+
+        private fun sendCheckin() {
+            val st = _state.value
+            if (st.busy != null) return
+            val d = st.draft
             speech.stop()
             val v =
                 Visit(
@@ -271,7 +361,11 @@ class VisitViewModel
                     previousContext = d.previousContext,
                     profilePhoto = d.profilePhoto,
                     startedAt = now(),
-                )
+                    answers = answers(st.settings.lang),
+                ).let { v ->
+                    // The time the visitor wants to spend sets how many exercises are planned.
+                    CheckinAnswers.exercisesForTime(d.picks[CheckinQuestion.TIME]?.singleOrNull())?.let { v.copy(maxExercises = it) } ?: v
+                }
             _state.update { it.copy(busy = Busy.CHECKIN, error = null) }
             viewModelScope.launch {
                 val r =

@@ -119,4 +119,64 @@
     <string name="next_step">Nächster Schritt</string>
     <string name="previous_step">Vorheriger Schritt</string>
     <string name="photo_optional">Foto, wenn du magst: %1$s</string>
+    <string name="continue_button">Weiter</string>
+    <string name="question_of">Frage %1$d von %2$d</string>
+    <string name="question_hint">Tippe an, was passt, oder sag es einfach.</string>
+    <string name="you_said">Du hast gesagt: %1$s</string>
+    <string name="q_feelMore">Wie möchtest du dich nach heute fühlen?</string>
+    <string-array name="q_feelMore_options">
+        <item>Ruhiger und gelassener</item>
+        <item>Klarer und fokussierter</item>
+        <item>Leichter und unbeschwerter</item>
+        <item>Energievoller</item>
+        <item>Hoffnungsvoller</item>
+        <item>Selbstbewusster</item>
+        <item>Mutiger</item>
+        <item>Verbundener mit mir selbst</item>
+        <item>Verbundener mit anderen Menschen</item>
+        <item>Dankbarer</item>
+        <item>Inspirierter</item>
+        <item>Zufriedener</item>
+    </string-array>
+    <string name="q_leaveBehind">Gibt es etwas, das du heute hinter dir lassen möchtest?</string>
+    <string-array name="q_leaveBehind_options">
+        <item>Stress und Anspannung</item>
+        <item>Grübeln</item>
+        <item>Sorgen</item>
+        <item>Selbstzweifel</item>
+        <item>Überforderung</item>
+        <item>Einsamkeit</item>
+        <item>Negative Gedanken</item>
+        <item>Ärger oder Frust</item>
+        <item>Erschöpfung</item>
+        <item>Orientierungslosigkeit</item>
+        <item>Nichts davon</item>
+    </string-array>
+    <string name="q_interest">Was interessiert dich heute am meisten?</string>
+    <string-array name="q_interest_options">
+        <item>Mich selbst besser kennenlernen</item>
+        <item>Meine Gedanken verstehen</item>
+        <item>Meine Gefühle verstehen</item>
+        <item>Neue Perspektiven entdecken</item>
+        <item>Beziehungen stärken</item>
+        <item>Mentale Stärke entwickeln</item>
+        <item>Einfach Erfahrungen sammeln und ausprobieren</item>
+        <item>Überrasch mich</item>
+    </string-array>
+    <string name="q_time">Wie viel Zeit möchtest du heute ungefähr investieren?</string>
+    <string-array name="q_time_options">
+        <item>30 Minuten</item>
+        <item>60 Minuten</item>
+        <item>90 Minuten</item>
+        <item>Mehr als 90 Minuten</item>
+        <item>Ich lasse mich treiben</item>
+    </string-array>
+    <string name="q_state">Heute bin ich eher …</string>
+    <string-array name="q_state_options">
+        <item>🌧 Belastet</item>
+        <item>🌥 Nachdenklich</item>
+        <item>Ausgeglichen</item>
+        <item>☀ Gut drauf</item>
+        <item>Neugierig</item>
+    </string-array>
 </resources>

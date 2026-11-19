@@ -5,6 +5,7 @@ import com.mentalcoach.data.db.ExerciseRunEntity
 import com.mentalcoach.data.db.VisitDao
 import com.mentalcoach.data.db.VisitEntity
 import com.mentalcoach.domain.ChatTurn
+import com.mentalcoach.domain.CheckinAnswer
 import com.mentalcoach.domain.CheckinReading
 import com.mentalcoach.domain.ExerciseNote
 import com.mentalcoach.domain.ExerciseRun
@@ -69,6 +70,7 @@ class RoomVisitRepository(
             screen = Screen.from(v.screen),
             checkin = v.checkinJson?.let { json.decodeFromString<CheckinReading>(it) },
             greeting = v.greeting,
+            answers = json.decodeFromString<List<CheckinAnswer>>(v.answersJson),
             exercises = runs,
             suggestion = v.suggestionJson?.let { json.decodeFromString<Suggestion>(it) },
             logbook = v.logbookJson?.let { json.decodeFromString<Logbook>(it) },
@@ -94,6 +96,7 @@ class RoomVisitRepository(
                 suggestionJson = visit.suggestion?.let { json.encodeToString(it) },
                 logbookJson = visit.logbook?.let { json.encodeToString(it) },
                 crisisText = visit.crisisText,
+                answersJson = json.encodeToString(visit.answers),
             )
         val runs =
             visit.exercises.mapIndexed { i, r ->

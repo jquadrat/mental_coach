@@ -1,5 +1,6 @@
 package com.mentalcoach.data.api
 
+import com.mentalcoach.domain.CheckinAnswer
 import com.mentalcoach.domain.ExerciseLibrary
 import com.mentalcoach.domain.Lang
 import com.mentalcoach.domain.Role
@@ -109,6 +110,22 @@ class Prompts(
         """.trimIndent()
 
     companion object {
+        /** English question meaning, so the coach understands answers in either language. */
+        val QUESTION_TEXT =
+            mapOf(
+                "feelMore" to "How they want to feel after today",
+                "leaveBehind" to "What they want to leave behind today",
+                "interest" to "What interests them most today",
+                "time" to "Time they want to spend",
+                "state" to "Today they are rather",
+            )
+
+        fun answerText(a: CheckinAnswer): String =
+            listOfNotNull(
+                a.selected.takeIf { it.isNotEmpty() }?.joinToString(", "),
+                a.spoken.takeIf { it.isNotBlank() }?.let { "in their words: \"$it\"" },
+            ).joinToString("; ").ifEmpty { "(no answer)" }
+
         fun langName(lang: String) = if (lang == "de") "German (use informal du)" else "English"
 
         fun describe(s: SessionPayload): String {
@@ -118,6 +135,10 @@ class Prompts(
                 parts += "Notes from a previous visit:\n<previous_context>\n${it.take(6000)}\n</previous_context>"
             }
             parts += "Check-in, in the visitor's words:\n<checkin>\n${s.mood}\n</checkin>"
+            if (s.answers.any { it.selected.isNotEmpty() || it.spoken.isNotBlank() }) {
+                parts += "Check-in questions (the visitor tapped options and/or answered in their own words):\n" +
+                    s.answers.joinToString("\n") { a -> "- ${QUESTION_TEXT[a.question] ?: a.question}: " + answerText(a) }
+            }
             s.checkin?.let {
                 parts += "Your check-in reading: ${it.summary} (mood ${it.mood}/10, energy ${it.energy}/10)."
             }

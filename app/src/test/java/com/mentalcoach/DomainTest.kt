@@ -9,6 +9,7 @@ import com.mentalcoach.data.api.ReflectResult
 import com.mentalcoach.data.api.SessionPayload
 import com.mentalcoach.data.api.StrataCoachApi
 import com.mentalcoach.domain.ChatTurn
+import com.mentalcoach.domain.CheckinAnswers
 import com.mentalcoach.domain.CrisisDetector
 import com.mentalcoach.domain.PhotoSelection
 import com.mentalcoach.domain.Role
@@ -41,6 +42,28 @@ class PhotoSelectionTest {
     fun removalShiftsIndices() {
         assertEquals(listOf(0, 2), PhotoSelection.afterRemoval(listOf(0, 3), 1))
         assertEquals(listOf(2), PhotoSelection.afterRemoval(listOf(0, 3), 0))
+    }
+}
+
+class CheckinAnswersTest {
+    @Test
+    fun matchesSpokenWordsToOptions() {
+        val de = listOf("Stress und Anspannung", "Grübeln", "Sorgen", "Selbstzweifel", "Nichts davon")
+        assertEquals(setOf(0, 2), CheckinAnswers.match("Vor allem den Stress und meine Sorgen", de))
+        assertEquals(setOf(1), CheckinAnswers.match("ich grübel zu viel", de))
+        assertEquals(emptySet<Int>(), CheckinAnswers.match("keine Ahnung", de))
+        val time = listOf("30 Minuten", "60 Minuten", "90 Minuten", "Mehr als 90 Minuten", "Ich lasse mich treiben")
+        assertEquals(2, CheckinAnswers.best("so 90 Minuten", time))
+        assertEquals(3, CheckinAnswers.best("mehr als 90", time))
+        assertEquals(4, CheckinAnswers.best("ich lasse mich einfach treiben", time))
+    }
+
+    @Test
+    fun timeSetsExerciseCount() {
+        assertEquals(2, CheckinAnswers.exercisesForTime(0))
+        assertEquals(5, CheckinAnswers.exercisesForTime(3))
+        assertNull(CheckinAnswers.exercisesForTime(4))
+        assertNull(CheckinAnswers.exercisesForTime(null))
     }
 }
 

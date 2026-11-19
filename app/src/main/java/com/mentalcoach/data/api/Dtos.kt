@@ -1,6 +1,7 @@
 package com.mentalcoach.data.api
 
 import com.mentalcoach.domain.ChatTurn
+import com.mentalcoach.domain.CheckinAnswer
 import com.mentalcoach.domain.CheckinReading
 import com.mentalcoach.domain.ExerciseNote
 import com.mentalcoach.domain.Logbook
@@ -32,6 +33,7 @@ data class SessionPayload(
     val previousContext: String? = null,
     val checkin: CheckinReading? = null,
     val exercises: List<ExerciseRecord> = emptyList(),
+    val answers: List<CheckinAnswer> = emptyList(),
 ) {
     companion object {
         fun from(v: Visit) =
@@ -42,6 +44,7 @@ data class SessionPayload(
                 mood = v.mood,
                 previousContext = v.previousContext?.takeIf { it.isNotBlank() },
                 checkin = v.checkin,
+                answers = v.answers,
                 exercises =
                     v.exercises.map {
                         ExerciseRecord(it.exerciseId, it.title, it.startedAt, it.endedAt, it.chat, it.moodNow, it.notes)

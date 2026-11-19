@@ -184,6 +184,8 @@ fun MicButton(
     onText: (String) -> Unit,
     onStart: () -> Unit,
     modifier: Modifier = Modifier,
+    /** Called once with the full text when the visitor stops speaking (not on errors). */
+    onFinished: ((String) -> Unit)? = null,
 ) {
     if (LocalInspectionMode.current) {
         FilledTonalIconButton(onClick = {}, modifier = modifier.size(56.dp)) { Icon(Icons.Default.Mic, null) }
@@ -201,7 +203,18 @@ fun MicButton(
         onStart()
         val base = current.trimEnd().let { if (it.isEmpty()) "" else "$it " }
         listening = true
-        listener.start(lang, onText = { onText(base + it) }, onEnd = { listening = false })
+        var heard = ""
+        listener.start(
+            lang,
+            onText = {
+                heard = it
+                onText(base + it)
+            },
+            onEnd = { error ->
+                listening = false
+                if (!error && heard.isNotBlank()) onFinished?.invoke(base + heard)
+            },
+        )
     }
 
     FilledTonalIconToggleButton(

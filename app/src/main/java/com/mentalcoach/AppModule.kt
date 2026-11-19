@@ -15,6 +15,7 @@ import com.mentalcoach.data.repo.VisitRepository
 import com.mentalcoach.data.settings.DataStoreSettingsRepository
 import com.mentalcoach.data.settings.Settings
 import com.mentalcoach.data.settings.SettingsRepository
+import com.mentalcoach.domain.CheckinQuestion
 import com.mentalcoach.domain.ExerciseLibrary
 import com.mentalcoach.domain.Lang
 import com.mentalcoach.media.FilePhotoStore
@@ -172,6 +173,35 @@ class ResourceStrings(
         total: Int,
         text: String,
     ) = res(lang).getString(R.string.step_spoken, number, total, text)
+
+    override fun questionTitle(
+        lang: Lang,
+        q: CheckinQuestion,
+    ): String =
+        res(lang).getString(
+            when (q) {
+                CheckinQuestion.FEEL_MORE -> R.string.q_feelMore
+                CheckinQuestion.LEAVE_BEHIND -> R.string.q_leaveBehind
+                CheckinQuestion.INTEREST -> R.string.q_interest
+                CheckinQuestion.TIME -> R.string.q_time
+                CheckinQuestion.STATE -> R.string.q_state
+            },
+        )
+
+    override fun questionOptions(
+        lang: Lang,
+        q: CheckinQuestion,
+    ): List<String> =
+        res(lang)
+            .getStringArray(
+                when (q) {
+                    CheckinQuestion.FEEL_MORE -> R.array.q_feelMore_options
+                    CheckinQuestion.LEAVE_BEHIND -> R.array.q_leaveBehind_options
+                    CheckinQuestion.INTEREST -> R.array.q_interest_options
+                    CheckinQuestion.TIME -> R.array.q_time_options
+                    CheckinQuestion.STATE -> R.array.q_state_options
+                },
+            ).toList()
 
     override fun crisisDefault(lang: Lang) = res(lang).getString(R.string.crisis_default)
 

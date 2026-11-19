@@ -51,7 +51,9 @@ import com.mentalcoach.media.fileStem
 import com.mentalcoach.media.logbookDate
 import com.mentalcoach.ui.VisitViewModel
 import com.mentalcoach.ui.chat.ChatScreen
+import com.mentalcoach.ui.checkin.CheckinQuestionStep
 import com.mentalcoach.ui.checkin.CheckinScreen
+import com.mentalcoach.ui.checkin.QuestionActions
 import com.mentalcoach.ui.components.BusyOverlay
 import com.mentalcoach.ui.components.CameraBox
 import com.mentalcoach.ui.components.ErrorDialog
@@ -197,6 +199,26 @@ fun MentalCoachRoot(
             Box(Modifier.padding(padding).fillMaxSize()) {
                 NavHost(nav, startDestination = state.screen.route) {
                     composable(Screen.CHECKIN.route) {
+                        val q = state.draft.question
+                        if (q != null) {
+                            BackHandler { vm.previousQuestion() }
+                            CheckinQuestionStep(
+                                question = q,
+                                picks = state.draft.picks[q].orEmpty(),
+                                spoken = state.draft.spoken[q].orEmpty(),
+                                lang = state.lang,
+                                actions =
+                                    QuestionActions(
+                                        onPick = vm::togglePick,
+                                        onSpoken = vm::updateSpoken,
+                                        onSpokenDone = vm::answerSpoken,
+                                        onNext = vm::nextQuestion,
+                                        onBack = vm::previousQuestion,
+                                        onStopSpeaking = vm::stopSpeaking,
+                                    ),
+                            )
+                            return@composable
+                        }
                         CheckinScreen(
                             draft = state.draft,
                             lang = state.lang,

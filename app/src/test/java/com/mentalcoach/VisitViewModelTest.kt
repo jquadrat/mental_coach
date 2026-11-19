@@ -5,6 +5,7 @@ import com.mentalcoach.data.api.FakeCoachApi
 import com.mentalcoach.data.repo.InMemoryVisitRepository
 import com.mentalcoach.data.settings.InMemorySettingsRepository
 import com.mentalcoach.data.settings.Settings
+import com.mentalcoach.domain.CheckinQuestion
 import com.mentalcoach.domain.Role
 import com.mentalcoach.domain.Screen
 import com.mentalcoach.ui.ErrorKind
@@ -63,6 +64,11 @@ class VisitViewModelTest {
         vm.setConsent(true)
         vm.submitCheckin()
         advanceUntilIdle()
+        // Skip through the check-in questions without answering.
+        repeat(CheckinQuestion.entries.size) {
+            vm.nextQuestion()
+            advanceUntilIdle()
+        }
     }
 
     private fun TestScope.doExercise(
@@ -338,6 +344,49 @@ class VisitViewModelTest {
                     .notes
                     .any { it.text == "Peppermint" },
             )
+        }
+
+    @Test
+    fun checkinQuestionsAnsweredByTapAndBySpeech() =
+        runTest(dispatcher) {
+            val vm = vm()
+            vm.updateName("Ana")
+            vm.updateMood("tired")
+            vm.setConsent(true)
+            vm.submitCheckin()
+            advanceUntilIdle()
+            assertEquals(CheckinQuestion.FEEL_MORE, vm.state.value.draft.question)
+            assertEquals("Question feelMore?", speech.spoken.last())
+            assertTrue(coach.calls.isEmpty())
+
+            // Tapped options, then Continue.
+            vm.togglePick(CheckinQuestion.FEEL_MORE, 0)
+            vm.togglePick(CheckinQuestion.FEEL_MORE, 2)
+            vm.nextQuestion()
+            // Spoken answer: options are matched and the next question is read by itself.
+            vm.answerSpoken(CheckinQuestion.LEAVE_BEHIND, "mostly the stress and my worries")
+            assertEquals(CheckinQuestion.INTEREST, vm.state.value.draft.question)
+            assertEquals("Question interest?", speech.spoken.last())
+            vm.previousQuestion()
+            assertEquals(CheckinQuestion.LEAVE_BEHIND, vm.state.value.draft.question)
+            vm.nextQuestion()
+            vm.nextQuestion()
+            vm.answerSpoken(CheckinQuestion.TIME, "about 90 minutes")
+            vm.togglePick(CheckinQuestion.STATE, 1)
+            vm.togglePick(CheckinQuestion.STATE, 2) // single choice: replaces
+            vm.nextQuestion()
+            advanceUntilIdle()
+
+            val v = vm.state.value.visit!!
+            assertEquals(Screen.INTRO, v.screen)
+            assertEquals(4, v.maxExercises) // 90 minutes -> 4 exercises (setting is 2)
+            val byId = v.answers.associateBy { it.question }
+            assertEquals(listOf("Calmer and more relaxed", "Braver"), byId["feelMore"]!!.selected)
+            assertEquals(listOf("Stress and tension", "Worries"), byId["leaveBehind"]!!.selected)
+            assertEquals("mostly the stress and my worries", byId["leaveBehind"]!!.spoken)
+            assertEquals(listOf("90 minutes"), byId["time"]!!.selected)
+            assertEquals(listOf("Braver"), byId["state"]!!.selected)
+            assertEquals(v.answers, repo.stored!!.answers)
         }
 
     @Test

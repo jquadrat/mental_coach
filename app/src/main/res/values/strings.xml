@@ -131,4 +131,65 @@
     <string name="next_step">Next step</string>
     <string name="previous_step">Previous step</string>
     <string name="photo_optional">Photo, if you like: %1$s</string>
+    <!-- Check-in questions -->
+    <string name="continue_button">Continue</string>
+    <string name="question_of">Question %1$d of %2$d</string>
+    <string name="question_hint">Tap what fits, or just say it.</string>
+    <string name="you_said">You said: %1$s</string>
+    <string name="q_feelMore">How would you like to feel after today?</string>
+    <string-array name="q_feelMore_options">
+        <item>Calmer and more relaxed</item>
+        <item>Clearer and more focused</item>
+        <item>Lighter and more carefree</item>
+        <item>More energetic</item>
+        <item>More hopeful</item>
+        <item>More self-confident</item>
+        <item>Braver</item>
+        <item>More connected with myself</item>
+        <item>More connected with other people</item>
+        <item>More grateful</item>
+        <item>More inspired</item>
+        <item>More content</item>
+    </string-array>
+    <string name="q_leaveBehind">Is there anything you would like to leave behind today?</string>
+    <string-array name="q_leaveBehind_options">
+        <item>Stress and tension</item>
+        <item>Brooding</item>
+        <item>Worries</item>
+        <item>Self-doubt</item>
+        <item>Feeling overwhelmed</item>
+        <item>Loneliness</item>
+        <item>Negative thoughts</item>
+        <item>Anger or frustration</item>
+        <item>Exhaustion</item>
+        <item>Feeling lost</item>
+        <item>None of these</item>
+    </string-array>
+    <string name="q_interest">What interests you most today?</string>
+    <string-array name="q_interest_options">
+        <item>Getting to know myself better</item>
+        <item>Understanding my thoughts</item>
+        <item>Understanding my feelings</item>
+        <item>Discovering new perspectives</item>
+        <item>Strengthening relationships</item>
+        <item>Building mental strength</item>
+        <item>Simply trying things out</item>
+        <item>Surprise me</item>
+    </string-array>
+    <string name="q_time">About how much time would you like to spend today?</string>
+    <string-array name="q_time_options">
+        <item>30 minutes</item>
+        <item>60 minutes</item>
+        <item>90 minutes</item>
+        <item>More than 90 minutes</item>
+        <item>I\'ll go with the flow</item>
+    </string-array>
+    <string name="q_state">Today I am rather …</string>
+    <string-array name="q_state_options">
+        <item>🌧 Weighed down</item>
+        <item>🌥 Thoughtful</item>
+        <item>Balanced</item>
+        <item>☀ In a good mood</item>
+        <item>Curious</item>
+    </string-array>
 </resources>

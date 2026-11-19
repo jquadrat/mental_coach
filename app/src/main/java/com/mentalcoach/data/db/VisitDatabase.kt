@@ -37,6 +37,8 @@ data class VisitEntity(
     /** JSON of Logbook. */
     val logbookJson: String?,
     val crisisText: String?,
+    /** JSON list of CheckinAnswer. */
+    @ColumnInfo(defaultValue = "[]") val answersJson: String = "[]",
 )
 
 @Entity(
@@ -140,9 +142,9 @@ interface VisitDao {
 
 @Database(
     entities = [VisitEntity::class, ExerciseRunEntity::class, ChatTurnEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = true,
-    autoMigrations = [AutoMigration(from = 1, to = 2)],
+    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3)],
 )
 @TypeConverters(Converters::class)
 abstract class VisitDatabase : RoomDatabase() {

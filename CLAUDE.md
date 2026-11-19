@@ -108,6 +108,7 @@ Build it on the device, mirroring `contextMarkdown()` in `mentalcoach/public/app
 ./gradlew testDebugUnitTest      # JVM unit tests (ViewModels, exporters, DTO parsing)
 ./gradlew connectedDebugAndroidTest   # instrumented/Compose UI tests (needs a device)
 ./gradlew lint ktlintCheck       # static checks
+STRATA_LIVE=1 ./gradlew testDebugUnitTest --tests '*StrataLiveTest*'   # opt-in: real calls to Strata (invented text only)
 ```
 
 Set `STRATA_API_KEY` (env var or `local.properties`) before building for real coaching. Without it, use demo mode.
@@ -123,6 +124,33 @@ Testing expectations:
 - Composables take state and lambdas only, with previews for each screen in EN and DE.
 - Large touch targets (≥ 56dp primary buttons) and a calm palette (deep green `#2F5D50`, warm accent `#D98C5F`, paper background `#F4F1EA`). Support dark theme and respect the system font scale and reduced motion.
 - Keep coach copy out of the UI code: everything the coach says comes from the LLM (prompts live in `data/api/`), and the UI copy lives in string resources.
+
+## Exercises
+List of example exercises to propose:
+- 1. Yoga
+- 2. Box Breathing
+- 3. Push-Up
+- 4. Power Posen
+- 5. Silent Disco
+- 6. Applausraum
+- 7. Spiegel
+- 8. Fragen Stellen
+
+## Ziele
+Die Ziele der Erfahrung. Die Zahlen geben die Erlebnisse an die diesen Zielen zugeordnet sind.
+- Positive Lebenseinstellung
+  - 5
+- Beziehung stärken
+  - 8
+- Entspannen
+  - 1, 2
+- Visualisieren
+  - 6
+- Bewegung
+  - 4
+- Emotionen kennenlernen
+  - 7
+
 
 ## Open questions
 

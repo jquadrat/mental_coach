@@ -1,0 +1,254 @@
+[
+  {
+    "id": "box-breathing",
+    "minutes": 4,
+    "goodFor": "stress, nervousness, racing thoughts, high arousal; calms the body quickly",
+    "title": { "en": "Box breathing", "de": "Box-Atmung" },
+    "steps": {
+      "en": [
+        "Sit comfortably with both feet on the floor.",
+        "Breathe in through your nose for four counts.",
+        "Hold your breath gently for four counts.",
+        "Breathe out slowly for four counts.",
+        "Hold empty for four counts. Repeat for about four minutes."
+      ],
+      "de": [
+        "Setz dich bequem hin, beide Füße auf dem Boden.",
+        "Atme vier Zählzeiten lang durch die Nase ein.",
+        "Halte den Atem sanft für vier Zählzeiten.",
+        "Atme langsam vier Zählzeiten lang aus.",
+        "Bleib vier Zählzeiten leer. Wiederhole das etwa vier Minuten lang."
+      ]
+    },
+    "photoPrompts": {
+      "en": ["The spot where you are sitting", "Your hands resting while you breathe", "Your face after the last breath"],
+      "de": ["Der Platz, an dem du sitzt", "Deine Hände in Ruhe beim Atmen", "Dein Gesicht nach dem letzten Atemzug"]
+    }
+  },
+  {
+    "id": "gentle-yoga",
+    "minutes": 6,
+    "goodFor": "tension, stiffness, restlessness, low energy; gentle movement that reconnects breath and body",
+    "title": { "en": "Gentle yoga", "de": "Sanftes Yoga" },
+    "steps": {
+      "en": [
+        "Stand tall with your feet hip-width apart and take three slow breaths.",
+        "Breathe in and raise your arms above your head. Breathe out and fold forward gently, knees soft.",
+        "Come onto hands and knees. Round your back as you breathe out, let it sink as you breathe in, five times.",
+        "Rest in child's pose for five breaths, forehead towards the floor.",
+        "Come back to standing slowly and notice how your body feels."
+      ],
+      "de": [
+        "Stell dich aufrecht hin, die Füße hüftbreit, und atme dreimal langsam.",
+        "Heb beim Einatmen die Arme über den Kopf. Beug dich beim Ausatmen sanft nach vorn, die Knie weich.",
+        "Geh in den Vierfüßlerstand. Mach beim Ausatmen einen runden Rücken und lass ihn beim Einatmen sinken, fünfmal.",
+        "Ruh dich fünf Atemzüge lang in der Kindhaltung aus, die Stirn Richtung Boden.",
+        "Komm langsam wieder in den Stand und spür nach, wie sich dein Körper anfühlt."
+      ]
+    },
+    "photoPrompts": {
+      "en": ["Your mat or the spot where you practise", "Your favourite pose", "How you stand at the end"],
+      "de": ["Deine Matte oder der Platz, an dem du übst", "Deine Lieblingshaltung", "Wie du am Ende dastehst"]
+    }
+  },
+  {
+    "id": "push-ups",
+    "minutes": 3,
+    "goodFor": "frustration, anger, restless energy, feeling stuck or powerless; short physical activation",
+    "title": { "en": "Push-ups", "de": "Liegestütze" },
+    "steps": {
+      "en": [
+        "Choose your level: against a wall, on your knees, or on your toes. Any level is fine.",
+        "Place your hands a little wider than your shoulders and keep your body in a straight line.",
+        "Lower yourself slowly while breathing in, push back up while breathing out.",
+        "Do as many calm repetitions as feel good, then rest for thirty seconds.",
+        "Do one more round, then stand still and feel your heartbeat."
+      ],
+      "de": [
+        "Wähl deine Stufe: an der Wand, auf den Knien oder auf den Zehen. Jede Stufe ist gut.",
+        "Setz die Hände etwas breiter als die Schultern auf und halte den Körper gerade.",
+        "Senk dich beim Einatmen langsam ab und drück dich beim Ausatmen wieder hoch.",
+        "Mach so viele ruhige Wiederholungen, wie sich gut anfühlen, und ruh dich dann dreißig Sekunden aus.",
+        "Mach noch eine Runde, steh dann still und spür deinen Herzschlag."
+      ]
+    },
+    "photoPrompts": {
+      "en": ["Your starting position", "You in the middle of a push-up", "Your face after the last one"],
+      "de": ["Deine Startposition", "Du mitten in einem Liegestütz", "Dein Gesicht nach dem letzten"]
+    }
+  },
+  {
+    "id": "grounding-54321",
+    "minutes": 5,
+    "goodFor": "anxiety, feeling overwhelmed or disconnected, dissociation; brings attention to the present",
+    "title": { "en": "5-4-3-2-1 grounding", "de": "5-4-3-2-1 Erdung" },
+    "steps": {
+      "en": [
+        "Look around and name five things you can see.",
+        "Notice four things you can touch, and touch them.",
+        "Listen for three things you can hear.",
+        "Find two things you can smell.",
+        "Notice one thing you can taste, or one thing you like about this moment."
+      ],
+      "de": [
+        "Schau dich um und benenne fünf Dinge, die du siehst.",
+        "Finde vier Dinge, die du berühren kannst, und berühre sie.",
+        "Lausche auf drei Dinge, die du hörst.",
+        "Finde zwei Dinge, die du riechen kannst.",
+        "Bemerke eine Sache, die du schmeckst, oder eine Sache, die du an diesem Moment magst."
+      ]
+    },
+    "photoPrompts": {
+      "en": ["One of the five things you saw", "Something you touched", "The thing you like about this moment"],
+      "de": ["Eines der fünf Dinge, die du gesehen hast", "Etwas, das du berührt hast", "Das, was du an diesem Moment magst"]
+    }
+  },
+  {
+    "id": "gratitude-three",
+    "minutes": 6,
+    "goodFor": "low mood, sadness, pessimism, feeling stuck; shifts attention to resources",
+    "title": { "en": "Three good things", "de": "Drei gute Dinge" },
+    "steps": {
+      "en": [
+        "Think of three things that went well recently, however small.",
+        "For each one, picture the moment in detail: where you were, who was there.",
+        "Ask yourself what part you played in making it happen.",
+        "Notice how your body feels while you remember."
+      ],
+      "de": [
+        "Denk an drei Dinge, die in letzter Zeit gut gelaufen sind, auch kleine.",
+        "Stell dir jeden Moment genau vor: wo du warst, wer dabei war.",
+        "Frag dich, welchen Anteil du daran hattest.",
+        "Spür nach, wie sich dein Körper beim Erinnern anfühlt."
+      ]
+    },
+    "photoPrompts": {
+      "en": ["Something here that reminds you of the first good thing", "A gesture that shows the second one", "Your smile, or how you look right now"],
+      "de": ["Etwas hier, das dich an das erste gute Ding erinnert", "Eine Geste für das zweite", "Dein Lächeln, oder wie du gerade aussiehst"]
+    }
+  },
+  {
+    "id": "body-scan",
+    "minutes": 7,
+    "goodFor": "tension, restlessness, tiredness, poor body awareness; relaxes and reconnects with the body",
+    "title": { "en": "Short body scan", "de": "Kurzer Body-Scan" },
+    "steps": {
+      "en": [
+        "Close your eyes or lower your gaze.",
+        "Move your attention slowly from your feet up to your head.",
+        "At each part, notice any tension without judging it.",
+        "Breathe into tense areas and let them soften on the out-breath.",
+        "Finish by feeling your whole body at once."
+      ],
+      "de": [
+        "Schließ die Augen oder senke den Blick.",
+        "Wandere mit deiner Aufmerksamkeit langsam von den Füßen bis zum Kopf.",
+        "Bemerke an jeder Stelle Anspannung, ohne sie zu bewerten.",
+        "Atme in angespannte Stellen hinein und lass sie beim Ausatmen weich werden.",
+        "Spür zum Schluss deinen ganzen Körper auf einmal."
+      ]
+    },
+    "photoPrompts": {
+      "en": ["Your feet on the ground", "The part of your body that relaxed most", "Your whole posture at the end"],
+      "de": ["Deine Füße auf dem Boden", "Der Körperteil, der sich am meisten entspannt hat", "Deine ganze Haltung am Ende"]
+    }
+  },
+  {
+    "id": "mindful-walk",
+    "minutes": 6,
+    "goodFor": "low energy, restlessness, rumination, feeling stuck; gentle activation through movement",
+    "title": { "en": "Mindful walk", "de": "Achtsames Gehen" },
+    "steps": {
+      "en": [
+        "Walk slowly around the room or along a short path.",
+        "Feel each foot lift, move and touch the ground.",
+        "Let your arms swing loosely and notice your breath.",
+        "Every few steps, look up and notice something new."
+      ],
+      "de": [
+        "Geh langsam durch den Raum oder einen kurzen Weg entlang.",
+        "Spür, wie sich jeder Fuß hebt, bewegt und aufsetzt.",
+        "Lass die Arme locker schwingen und bemerke deinen Atem.",
+        "Schau alle paar Schritte auf und entdecke etwas Neues."
+      ]
+    },
+    "photoPrompts": {
+      "en": ["Your path or the floor ahead", "Something new you noticed while walking", "Where you ended the walk"],
+      "de": ["Dein Weg oder der Boden vor dir", "Etwas Neues, das dir beim Gehen aufgefallen ist", "Der Ort, an dem du angekommen bist"]
+    }
+  },
+  {
+    "id": "power-posture",
+    "minutes": 3,
+    "goodFor": "low confidence, self-doubt, feeling small or nervous before something; builds a sense of strength",
+    "title": { "en": "Strong posture", "de": "Starke Haltung" },
+    "steps": {
+      "en": [
+        "Stand up with your feet hip-width apart.",
+        "Lift your chest, relax your shoulders and raise your chin a little.",
+        "Put your hands on your hips or stretch your arms up wide.",
+        "Hold the posture for two minutes and breathe calmly.",
+        "Say one sentence to yourself that starts with: I can…"
+      ],
+      "de": [
+        "Stell dich hin, die Füße hüftbreit auseinander.",
+        "Heb die Brust, entspann die Schultern und heb das Kinn ein wenig.",
+        "Stemm die Hände in die Hüften oder streck die Arme weit nach oben.",
+        "Halte die Haltung zwei Minuten und atme ruhig.",
+        "Sag dir einen Satz, der beginnt mit: Ich kann…"
+      ]
+    },
+    "photoPrompts": {
+      "en": ["How you stood at the start", "Your strongest pose", "Your face as you say your I can sentence"],
+      "de": ["Wie du am Anfang dastandest", "Deine stärkste Pose", "Dein Gesicht bei deinem Ich-kann-Satz"]
+    }
+  },
+  {
+    "id": "expressive-drawing",
+    "minutes": 8,
+    "goodFor": "mixed or hard-to-name feelings, frustration, creativity block; externalises emotions without words",
+    "title": { "en": "Draw your feeling", "de": "Male dein Gefühl" },
+    "steps": {
+      "en": [
+        "Take paper and a pen or colours.",
+        "Without planning, draw shapes and colours that match how you feel right now.",
+        "After a few minutes, turn the paper and draw how you would like to feel.",
+        "Look at both drawings and notice what is different."
+      ],
+      "de": [
+        "Nimm Papier und einen Stift oder Farben.",
+        "Zeichne ohne Plan Formen und Farben, die zu deinem jetzigen Gefühl passen.",
+        "Dreh nach ein paar Minuten das Blatt um und zeichne, wie du dich fühlen möchtest.",
+        "Schau dir beide Bilder an und bemerke, was anders ist."
+      ]
+    },
+    "photoPrompts": {
+      "en": ["Your first drawing: how you feel", "Your second drawing: how you want to feel", "You holding both drawings"],
+      "de": ["Dein erstes Bild: wie du dich fühlst", "Dein zweites Bild: wie du dich fühlen möchtest", "Du mit beiden Bildern"]
+    }
+  },
+  {
+    "id": "kind-letter",
+    "minutes": 7,
+    "goodFor": "self-criticism, guilt, shame, loneliness; practises self-compassion",
+    "title": { "en": "A kind note to yourself", "de": "Ein freundlicher Brief an dich" },
+    "steps": {
+      "en": [
+        "Think of something you are being hard on yourself about.",
+        "Imagine a good friend in the same situation.",
+        "Write three or four sentences to yourself the way you would write to that friend.",
+        "Read the note slowly, out loud if you like."
+      ],
+      "de": [
+        "Denk an etwas, wofür du gerade streng mit dir bist.",
+        "Stell dir eine gute Freundin oder einen guten Freund in derselben Lage vor.",
+        "Schreib dir drei oder vier Sätze so, wie du dieser Person schreiben würdest.",
+        "Lies den Text langsam, gern auch laut."
+      ]
+    },
+    "photoPrompts": {
+      "en": ["Your writing place", "The note you wrote (only if you want to keep it)", "Your face after reading it"],
+      "de": ["Dein Schreibplatz", "Dein Text (nur wenn du ihn behalten möchtest)", "Dein Gesicht nach dem Lesen"]
+    }
+  }
+]

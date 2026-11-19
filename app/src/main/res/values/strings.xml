@@ -1,3 +1,127 @@
 <resources>
-    <string name="app_name">MentalCoach</string>
+    <string name="app_name" translatable="false">MentalCoach</string>
+    <string name="demo_badge">Demo mode</string>
+    <string name="voice_on">Voice on</string>
+    <string name="voice_off">Voice off</string>
+    <string name="settings">Settings</string>
+    <string name="back">Back</string>
+
+    <!-- Check-in -->
+    <string name="checkin_title">Welcome</string>
+    <string name="checkin_lead">Let\'s start by getting to know you a little.</string>
+    <string name="name_label">Your first name</string>
+    <string name="photo_label">Your picture</string>
+    <string name="photo_hint">It goes on the cover of your logbook. It stays on this device.</string>
+    <string name="take_photo">Take photo</string>
+    <string name="retake">Retake</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="mood_label">How are you feeling right now?</string>
+    <string name="mood_placeholder">Describe it in your own words. For example: a bit stressed after a long week, and I can\'t switch off.</string>
+    <string name="speak">Speak</string>
+    <string name="stop_listening">Stop listening</string>
+    <string name="previous_title">Been here before?</string>
+    <string name="previous_hint">Load the notes file (.md) you took home last time, so we can pick up where you left off.</string>
+    <string name="load_notes">Load notes</string>
+    <string name="remove_notes">Remove</string>
+    <string name="context_loaded">Notes from your last visit are loaded.</string>
+    <string name="consent">I understand this is a coaching experience, not therapy. My words are analysed by an AI; my photos stay on this device.</string>
+    <string name="checkin_button">Check in</string>
+
+    <!-- Permissions -->
+    <string name="camera_why">The camera is used for your logbook photos. Pictures stay on this tablet and are never uploaded.</string>
+    <string name="mic_why">The microphone lets you speak instead of typing. Speech is turned into text on this device where possible.</string>
+    <string name="allow_camera">Allow camera</string>
+    <string name="allow">Allow</string>
+    <string name="not_now">Not now</string>
+    <string name="camera_denied">Camera not available. You can continue without photos.</string>
+    <string name="mic_denied">Microphone not available. You can type instead.</string>
+
+    <!-- Intro -->
+    <string name="mood_meter">Mood</string>
+    <string name="energy_meter">Energy</string>
+    <string name="score_of_ten">%1$d/10</string>
+    <string name="exercise_of">Exercise %1$d of %2$d</string>
+    <string name="about_minutes">about %1$d minutes</string>
+    <string name="steps">Steps</string>
+    <string name="intro_photos">During the exercise you can take up to five photos, for example:</string>
+    <string name="repeat_instructions">Repeat instructions</string>
+    <string name="start_exercise">Start exercise</string>
+
+    <!-- Exercise -->
+    <string name="photo_of">Photo %1$d:</string>
+    <string name="photo_prompt_spoken">Photo %1$d. %2$s</string>
+    <string name="photo_extra">Optional: one more photo of anything that matters to you.</string>
+    <string name="all_photos">You have your photos. Finish whenever you\'re ready.</string>
+    <string name="photos_count">%1$d of 5 photos</string>
+    <string name="end_exercise">I\'m done with this exercise</string>
+    <string name="delete_photo">Delete photo</string>
+    <string name="no_photos_title">No photos yet</string>
+    <string name="no_photos_text">You haven\'t taken a photo. Finish anyway?</string>
+    <string name="finish_anyway">Finish anyway</string>
+
+    <!-- Chat -->
+    <string name="chat_title">How do you feel now?</string>
+    <string name="chat_placeholder">Type or speak your answer…</string>
+    <string name="send">Send</string>
+    <string name="coach">Coach</string>
+    <string name="you">You</string>
+    <string name="coach_opener">Welcome back, %1$s. How do you feel now, after the exercise?</string>
+    <string name="start_next">Start: %1$s</string>
+    <string name="end_visit_create">End visit and create my logbook</string>
+    <string name="end_visit_now">End the visit now</string>
+
+    <!-- Logbook -->
+    <string name="logbook_hint">Choose up to 2 photos per exercise for your logbook, or tap \"Don\'t care\".</string>
+    <string name="dont_care">Don\'t care</string>
+    <string name="takeaway">To remember</string>
+    <string name="logbook_meta">%1$s · %2$s</string>
+    <string name="save_pdf">Save logbook (PDF)</string>
+    <string name="save_html">Save logbook (HTML)</string>
+    <string name="save_context">Save notes for next time (.md)</string>
+    <string name="saved">Saved.</string>
+    <string name="new_visit">Finish and start a new visit</string>
+    <string name="new_visit_confirm_title">Start a new visit?</string>
+    <string name="new_visit_confirm">Make sure the logbook and notes are saved. This visit and its photos will be deleted from this device.</string>
+    <string name="delete_and_continue">Delete and start new</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Crisis -->
+    <string name="crisis_title">Let\'s pause here</string>
+    <string name="crisis_staff">Please talk to a member of the lab team now. They are here for you.</string>
+    <string name="crisis_default">What you shared sounds really heavy, and you deserve support from a person right now.</string>
+    <string name="crisis_contacts">Help contacts</string>
+    <string name="crisis_back">Back to the start</string>
+    <string name="crisis_back_confirm">This visit will be deleted from this device. Only continue together with a member of the lab team.</string>
+    <string name="default_helplines">Lab team: ask any staff member\nfindahelpline.com: free, confidential helplines worldwide</string>
+
+    <!-- Busy / errors -->
+    <string name="busy_checkin">Listening to how you feel…</string>
+    <string name="busy_reflect">Thinking…</string>
+    <string name="busy_logbook">Writing your logbook…</string>
+    <string name="need_name">Please enter your first name.</string>
+    <string name="need_mood">Please describe how you\'re feeling.</string>
+    <string name="need_consent">Please confirm the note above the button.</string>
+    <string name="error_network">The coach can\'t be reached. Check the connection and try again.</string>
+    <string name="error_server">The coach had a problem. Please try again.</string>
+    <string name="error_invalid">The coach\'s answer could not be read. Please try again.</string>
+    <string name="error_not_configured">No API key is configured. Turn on demo mode in Settings or ask the lab team.</string>
+    <string name="error_photo">The photo could not be saved.</string>
+    <string name="error_export">The file could not be saved.</string>
+    <string name="error_import">The notes file could not be read.</string>
+    <string name="retry">Try again</string>
+    <string name="dismiss">OK</string>
+
+    <!-- Settings -->
+    <string name="language">Language</string>
+    <string name="lang_en">English</string>
+    <string name="lang_de">Deutsch</string>
+    <string name="exercise_count">Exercises per visit (N): %1$d</string>
+    <string name="voice">Voice</string>
+    <string name="voice_auto">Automatic</string>
+    <string name="speak_aloud">Speak the coach aloud</string>
+    <string name="rate">Speaking speed: %1$.2f</string>
+    <string name="test_voice">Test voice</string>
+    <string name="helplines">Help contacts shown in a crisis (one per line)</string>
+    <string name="demo_mode">Demo mode (scripted coach, no network)</string>
+    <string name="settings_hint">Settings are stored on this device only.</string>
 </resources>

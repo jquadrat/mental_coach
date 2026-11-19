@@ -2,6 +2,7 @@ package com.mentalcoach
 
 import com.mentalcoach.domain.ChatTurn
 import com.mentalcoach.domain.CheckinReading
+import com.mentalcoach.domain.ExerciseNote
 import com.mentalcoach.domain.ExerciseRun
 import com.mentalcoach.domain.Lang
 import com.mentalcoach.domain.Logbook
@@ -46,6 +47,8 @@ class MarkdownExporterTest {
                                 ChatTurn(Role.USER, "Calmer.\n\nMy shoulders dropped."),
                             ),
                         moodNow = 7,
+                        guided = true,
+                        notes = listOf(ExerciseNote("A plant, the window\nand a lamp", 0), ExerciseNote("Birds outside", 2)),
                     ),
                 ),
             logbook =

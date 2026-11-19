@@ -71,6 +71,12 @@ class MarkdownExporter(
             lines += "- Time: ${time(ex.startedAt)}–${time(ex.endedAt)} (${minutes(ex.startedAt, ex.endedAt)} min)"
             lines += "- Photos: ${ex.photos.size} taken, ${ex.selected.size} kept in the logbook (photos stay with the visitor)"
             ex.moodNow?.let { lines += "- Mood afterwards: $it/10" }
+            if (ex.notes.isNotEmpty()) {
+                lines += listOf("", "Said or written during the exercise:", "")
+                ex.notes.forEach { n ->
+                    lines += "- " + (n.step?.let { "(step ${it + 1}) " } ?: "") + n.text.replace(Regex("\n+"), " ")
+                }
+            }
             lines += listOf("", "Conversation afterwards:", "")
             ex.chat.forEach { m ->
                 lines += "- **${if (m.role == Role.COACH) "Coach" else v.name}:** ${m.text.replace(Regex("\n+"), " ")}"

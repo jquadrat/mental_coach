@@ -58,6 +58,7 @@ import com.mentalcoach.ui.components.ErrorDialog
 import com.mentalcoach.ui.components.Localized
 import com.mentalcoach.ui.components.rememberPermission
 import com.mentalcoach.ui.crisis.CrisisScreen
+import com.mentalcoach.ui.exercise.ExerciseActions
 import com.mentalcoach.ui.exercise.ExerciseScreen
 import com.mentalcoach.ui.intro.IntroScreen
 import com.mentalcoach.ui.logbook.LogbookScreen
@@ -136,7 +137,8 @@ fun MentalCoachRoot(
             }
             Unit
         }
-        val labels = LogbookLabels(takeaway, meta)
+        val yourNotes = stringResource(R.string.your_notes)
+        val labels = LogbookLabels(takeaway, meta, yourNotes)
         val voiceSample = stringResource(R.string.checkin_lead)
         val savePdf =
             rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/pdf")) { uri ->
@@ -225,11 +227,21 @@ fun MentalCoachRoot(
                             run = run,
                             index = v.exercises.size,
                             max = v.maxExercises,
+                            lang = v.lang,
+                            noteDraft = state.noteDraft,
                             cameraReady = camera.ready && cameraPerm.granted,
                             camera = { CameraBox(camera, cameraPerm, it) },
-                            onShutter = { shoot(vm::onExercisePhoto) },
-                            onDeletePhoto = vm::deletePhoto,
-                            onEnd = vm::endExercise,
+                            actions =
+                                ExerciseActions(
+                                    onShutter = { shoot(vm::onExercisePhoto) },
+                                    onDeletePhoto = vm::deletePhoto,
+                                    onNoteDraft = vm::updateNoteDraft,
+                                    onSaveNote = vm::addNote,
+                                    onDeleteNote = vm::deleteNote,
+                                    onStep = vm::goToStep,
+                                    onEnd = vm::endExercise,
+                                    onStopSpeaking = vm::stopSpeaking,
+                                ),
                         )
                     }
                     composable(Screen.CHAT.route) {

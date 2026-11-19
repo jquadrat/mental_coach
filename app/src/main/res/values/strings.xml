@@ -48,16 +48,11 @@
     <string name="start_exercise">Start exercise</string>
 
     <!-- Exercise -->
-    <string name="photo_of">Photo %1$d:</string>
     <string name="photo_prompt_spoken">Photo %1$d. %2$s</string>
-    <string name="photo_extra">Optional: one more photo of anything that matters to you.</string>
     <string name="all_photos">You have your photos. Finish whenever you\'re ready.</string>
     <string name="photos_count">%1$d of 5 photos</string>
     <string name="end_exercise">I\'m done with this exercise</string>
     <string name="delete_photo">Delete photo</string>
-    <string name="no_photos_title">No photos yet</string>
-    <string name="no_photos_text">You haven\'t taken a photo. Finish anyway?</string>
-    <string name="finish_anyway">Finish anyway</string>
 
     <!-- Chat -->
     <string name="chat_title">How do you feel now?</string>
@@ -124,4 +119,16 @@
     <string name="helplines">Help contacts shown in a crisis (one per line)</string>
     <string name="demo_mode">Demo mode (scripted coach, no network)</string>
     <string name="settings_hint">Settings are stored on this device only.</string>
+    <!-- Notes and guided steps -->
+    <string name="note_label">Something to remember? Say it or type it.</string>
+    <string name="step_answer_label">What do you notice? Say it, type it, or take a photo.</string>
+    <string name="save_note">Save</string>
+    <string name="your_notes">Your words</string>
+    <string name="delete_note">Delete note</string>
+    <string name="note_thanks">Thank you.</string>
+    <string name="step_of">Step %1$d of %2$d</string>
+    <string name="step_spoken">Step %1$d of %2$d. %3$s</string>
+    <string name="next_step">Next step</string>
+    <string name="previous_step">Previous step</string>
+    <string name="photo_optional">Photo, if you like: %1$s</string>
 </resources>

@@ -47,6 +47,8 @@ data class Exercise(
     val title: LocalizedText,
     val steps: LocalizedList,
     val photoPrompts: LocalizedList,
+    /** Guided exercises go step by step; the visitor answers each step by voice, text or photo. */
+    val guided: Boolean = false,
 )
 
 @Serializable
@@ -60,6 +62,10 @@ enum class Role {
 
 @Serializable
 data class ChatTurn(val role: Role, val text: String)
+
+/** Something the visitor said or typed during an exercise, for the logbook. [step] is 0-based, if any. */
+@Serializable
+data class ExerciseNote(val text: String, val step: Int? = null)
 
 @Serializable
 data class CheckinReading(
@@ -90,6 +96,9 @@ data class ExerciseRun(
     val minutes: Int,
     val steps: List<String>,
     val photoPrompts: List<String>,
+    val guided: Boolean = false,
+    val stepIndex: Int = 0,
+    val notes: List<ExerciseNote> = emptyList(),
     val startedAt: String? = null,
     val endedAt: String? = null,
     val photos: List<String> = emptyList(),

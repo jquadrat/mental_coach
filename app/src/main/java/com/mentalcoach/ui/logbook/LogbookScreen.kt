@@ -111,6 +111,10 @@ fun LogbookScreen(
                     }
                 }
                 entry?.narrative?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
+                if (ex.notes.isNotEmpty()) {
+                    Text(stringResource(R.string.your_notes).uppercase(), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    ex.notes.forEach { Text("„${it.text}“", fontStyle = FontStyle.Italic, style = MaterialTheme.typography.bodyLarge) }
+                }
                 if (!entry?.takeaway.isNullOrBlank()) {
                     Surface(color = MaterialTheme.colorScheme.surfaceContainer, shape = MaterialTheme.shapes.small) {
                         Column(Modifier.padding(12.dp)) {

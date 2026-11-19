@@ -89,7 +89,7 @@ class Prompts(
     fun logbook(s: SessionPayload): String =
         describe(s) + "\n\n" +
             """
-        The visit is over. Write the take-home logbook for the visitor in ${langName(s.lang)}: a personal memory of the experience in the second person, one entry per exercise (exerciseIndex starts at 0), plus a factual context block in English for the coach of the next session. Use only what actually happened in the conversation, do not invent details.
+        The visit is over. Write the take-home logbook for the visitor in ${langName(s.lang)}: a personal memory of the experience in the second person, one entry per exercise (exerciseIndex starts at 0), plus a factual context block in English for the coach of the next session. Use only what actually happened in the conversation and in the visitor's notes during the exercises, do not invent details. Where the visitor recorded notes, weave their own words into that exercise's narrative.
 
         Return JSON with this shape:
         {
@@ -122,9 +122,13 @@ class Prompts(
                 parts += "Your check-in reading: ${it.summary} (mood ${it.mood}/10, energy ${it.energy}/10)."
             }
             s.exercises.forEachIndexed { i, ex ->
+                val notes =
+                    ex.notes.joinToString("\n") { n -> "- " + (n.step?.let { "(step ${it + 1}) " } ?: "") + n.text }
                 val chat =
                     ex.chat.joinToString("\n") { t -> "${if (t.role == Role.COACH) "Coach" else "Visitor"}: ${t.text}" }
-                parts += "Exercise ${i + 1}: ${ex.title} (${ex.id})." + if (chat.isNotEmpty()) "\nConversation afterwards:\n$chat" else ""
+                parts += "Exercise ${i + 1}: ${ex.title} (${ex.id})." +
+                    (if (notes.isNotEmpty()) "\nWhat the visitor said or wrote during the exercise:\n$notes" else "") +
+                    (if (chat.isNotEmpty()) "\nConversation afterwards:\n$chat" else "")
             }
             return parts.joinToString("\n\n")
         }

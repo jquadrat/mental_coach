@@ -1,5 +1,7 @@
 package com.mentalcoach.data.db
 
+import androidx.room.AutoMigration
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Entity
@@ -56,6 +58,10 @@ data class ExerciseRunEntity(
     val photoPaths: List<String>,
     val selectedPhotos: List<Int>,
     val moodNow: Int?,
+    @ColumnInfo(defaultValue = "0") val guided: Boolean = false,
+    @ColumnInfo(defaultValue = "0") val stepIndex: Int = 0,
+    /** JSON list of ExerciseNote. */
+    @ColumnInfo(defaultValue = "[]") val notesJson: String = "[]",
 )
 
 @Entity(
@@ -132,7 +138,12 @@ interface VisitDao {
     }
 }
 
-@Database(entities = [VisitEntity::class, ExerciseRunEntity::class, ChatTurnEntity::class], version = 1, exportSchema = true)
+@Database(
+    entities = [VisitEntity::class, ExerciseRunEntity::class, ChatTurnEntity::class],
+    version = 2,
+    exportSchema = true,
+    autoMigrations = [AutoMigration(from = 1, to = 2)],
+)
 @TypeConverters(Converters::class)
 abstract class VisitDatabase : RoomDatabase() {
     abstract fun visits(): VisitDao

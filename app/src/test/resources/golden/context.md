@@ -41,6 +41,11 @@ Coach reading: A lot is on your mind. Mood 5/10, energy 4/10. Feelings: tense, t
 - Photos: 3 taken, 2 kept in the logbook (photos stay with the visitor)
 - Mood afterwards: 7/10
 
+Said or written during the exercise:
+
+- (step 1) A plant, the window and a lamp
+- (step 3) Birds outside
+
 Conversation afterwards:
 
 - **Coach:** How do you feel now?

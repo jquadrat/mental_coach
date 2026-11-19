@@ -72,6 +72,15 @@ object TestStrings : VisitStrings {
 
     override fun allPhotos(lang: Lang) = "All photos taken."
 
+    override fun noteThanks(lang: Lang) = "Thank you."
+
+    override fun step(
+        lang: Lang,
+        number: Int,
+        total: Int,
+        text: String,
+    ) = "Step $number of $total. $text"
+
     override fun crisisDefault(lang: Lang) = "Default crisis text."
 
     override fun crisisStaff(lang: Lang) = "Talk to the lab team."

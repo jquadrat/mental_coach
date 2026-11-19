@@ -11,7 +11,7 @@ The coach is the Strata LLM (OpenAI-compatible) at `http://bonismp.ddns.net:4783
 The visit flow (the product spec, do not change it without asking):
 
 1. **Check-in**: the visitor enters a first name, takes a profile photo (used as the logbook cover), describes their current mood in their own words (typed or spoken), and confirms a consent note. They can optionally load the context `.md` file from a previous visit.
-2. **Instructions**: the coach (the Strata LLM) reads the mood (through speech recognition) and shows a short summary, 2–4 feelings, and mood and energy scores from 1 to 10. It then presents the first exercise with an intro and steps. Everything the coach says is **spoken aloud** with text-to-speech.
+2. **Instructions**: the coach (the Strata LLM) reads the mood (through speech recognition and by analyzing the foto using the LLM) and shows a short summary, 2–4 feelings, and mood and energy scores from 1 to 10. It then presents the first exercise with an intro and steps. Everything the coach says is **spoken aloud** with text-to-speech.
 3. **Exercise**: a timer, the steps, and a live camera. The visitor takes **1–5 photos**.
 4. The visitor ends the exercise with a button.
 5. **Reflection chat**: the coach asks how they feel now. The visitor answers by speech-to-text.

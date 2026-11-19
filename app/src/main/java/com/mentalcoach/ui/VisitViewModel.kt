@@ -12,6 +12,7 @@ import com.mentalcoach.domain.ChatTurn
 import com.mentalcoach.domain.CheckinReading
 import com.mentalcoach.domain.Exercise
 import com.mentalcoach.domain.ExerciseLibrary
+import com.mentalcoach.domain.ExerciseNote
 import com.mentalcoach.domain.ExerciseRun
 import com.mentalcoach.domain.Lang
 import com.mentalcoach.domain.PhotoSelection
@@ -46,6 +47,17 @@ interface VisitStrings {
     ): String
 
     fun allPhotos(lang: Lang): String
+
+    /** Spoken after the visitor recorded something during an exercise. */
+    fun noteThanks(lang: Lang): String
+
+    /** Spoken announcement of a guided step, e.g. "Step 2 of 5. ..." */
+    fun step(
+        lang: Lang,
+        number: Int,
+        total: Int,
+        text: String,
+    ): String
 
     fun crisisDefault(lang: Lang): String
 
@@ -84,6 +96,8 @@ data class VisitUiState(
     val visit: Visit? = null,
     val draft: CheckinDraft = CheckinDraft(),
     val chatDraft: String = "",
+    /** What the visitor is saying or typing during the exercise, before it is saved as a note. */
+    val noteDraft: String = "",
     val busy: Busy? = null,
     val error: UiError? = null,
     val settings: Settings = Settings(),
@@ -186,6 +200,7 @@ class VisitViewModel
             minutes = ex.minutes,
             steps = ex.steps[lang],
             photoPrompts = ex.photoPrompts[lang],
+            guided = ex.guided,
         )
 
         private suspend fun goCrisis(
@@ -296,7 +311,62 @@ class VisitViewModel
             viewModelScope.launch {
                 val nv = v.updateCurrent { it.copy(startedAt = it.startedAt ?: now()) }.copy(screen = Screen.EXERCISE)
                 commit(nv)
-                speakPhotoPrompt()
+                _state.update { it.copy(noteDraft = "") }
+                if (nv.current?.guided == true) speakStep() else speakPhotoPrompt()
+            }
+        }
+
+        private fun speakStep() {
+            val v = visit ?: return
+            val ex = v.current ?: return
+            ex.steps.getOrNull(ex.stepIndex)?.let { speak(strings.step(v.lang, ex.stepIndex + 1, ex.steps.size, it)) }
+        }
+
+        /** Guided exercises: move to step [index] and read it aloud. */
+        fun goToStep(index: Int) {
+            val v = on(Screen.EXERCISE) ?: return
+            val ex = v.current ?: return
+            if (!ex.guided || index !in ex.steps.indices) return
+            viewModelScope.launch {
+                commit(v.updateCurrent { it.copy(stepIndex = index) })
+                speakStep()
+            }
+        }
+
+        fun updateNoteDraft(v: String) = _state.update { it.copy(noteDraft = v) }
+
+        /** Saves what the visitor said or typed for the logbook. In guided exercises it answers the current step. */
+        fun addNote() {
+            val v = on(Screen.EXERCISE) ?: return
+            val ex = v.current ?: return
+            val text = _state.value.noteDraft.trim()
+            if (text.isEmpty()) return
+            viewModelScope.launch {
+                val step = if (ex.guided) ex.stepIndex else null
+                commit(v.updateCurrent { it.copy(notes = it.notes + ExerciseNote(text, step)) })
+                _state.update { it.copy(noteDraft = "") }
+                acknowledge()
+            }
+        }
+
+        fun deleteNote(index: Int) {
+            val v = on(Screen.EXERCISE) ?: return
+            viewModelScope.launch {
+                commit(v.updateCurrent { it.copy(notes = it.notes.filterIndexed { i, _ -> i != index }) })
+            }
+        }
+
+        /** Thanks the visitor; in a guided exercise also moves on to the next step. */
+        private suspend fun acknowledge() {
+            val v = visit ?: return
+            val ex = v.current ?: return
+            val thanks = strings.noteThanks(v.lang)
+            if (ex.guided && ex.stepIndex + 1 < ex.steps.size) {
+                val next = ex.stepIndex + 1
+                commit(v.updateCurrent { it.copy(stepIndex = next) })
+                speak("$thanks ${strings.step(v.lang, next + 1, ex.steps.size, ex.steps[next])}")
+            } else {
+                speak(thanks)
             }
         }
 
@@ -324,7 +394,8 @@ class VisitViewModel
                     .onSuccess { path ->
                         val cur = on(Screen.EXERCISE) ?: return@onSuccess
                         commit(cur.updateCurrent { it.copy(photos = it.photos + path) })
-                        speakPhotoPrompt()
+                        // In a guided exercise a photo can answer the current step.
+                        if (cur.current?.guided == true) acknowledge() else speakPhotoPrompt()
                     }.onFailure { _state.update { it.copy(error = UiError(ErrorKind.PHOTO)) } }
             }
         }
@@ -343,7 +414,15 @@ class VisitViewModel
         }
 
         fun endExercise() {
-            val v = on(Screen.EXERCISE) ?: return
+            val v0 = on(Screen.EXERCISE) ?: return
+            // Keep words that were spoken or typed but not saved yet.
+            val pending = _state.value.noteDraft.trim()
+            val v =
+                if (pending.isEmpty()) {
+                    v0
+                } else {
+                    v0.updateCurrent { it.copy(notes = it.notes + ExerciseNote(pending, if (it.guided) it.stepIndex else null)) }
+                }
             viewModelScope.launch {
                 val opener = strings.coachOpener(v.lang, v.name)
                 commit(
@@ -356,7 +435,7 @@ class VisitViewModel
                             )
                         }.copy(screen = Screen.CHAT),
                 )
-                _state.update { it.copy(chatDraft = "") }
+                _state.update { it.copy(chatDraft = "", noteDraft = "") }
                 speak(opener)
             }
         }

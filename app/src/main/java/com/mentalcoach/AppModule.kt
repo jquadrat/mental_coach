@@ -164,6 +164,15 @@ class ResourceStrings(
 
     override fun allPhotos(lang: Lang) = res(lang).getString(R.string.all_photos)
 
+    override fun noteThanks(lang: Lang) = res(lang).getString(R.string.note_thanks)
+
+    override fun step(
+        lang: Lang,
+        number: Int,
+        total: Int,
+        text: String,
+    ) = res(lang).getString(R.string.step_spoken, number, total, text)
+
     override fun crisisDefault(lang: Lang) = res(lang).getString(R.string.crisis_default)
 
     override fun crisisStaff(lang: Lang) = res(lang).getString(R.string.crisis_staff)

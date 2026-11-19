@@ -27,6 +27,7 @@ import java.time.format.FormatStyle
 data class LogbookLabels(
     val takeaway: String,
     val meta: String,
+    val notes: String,
 )
 
 fun logbookDate(v: Visit): String =
@@ -74,6 +75,7 @@ h2{font-size:1.35rem;margin:0 0 12px;color:var(--accent);font-weight:600}
 .lb-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block}
 .lb-takeaway{background:#f1ede2;border-left:4px solid var(--accent);padding:10px 14px;border-radius:6px;font-style:italic}
 .lb-takeaway strong{font-style:normal;font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:block}
+.lb-notes{margin:0 0 14px}.lb-notes strong{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.lb-notes ul{margin:4px 0 0;padding-left:20px}
 .lb-closing{border-top:1px solid var(--line);padding-top:24px;text-align:center;font-size:1.1rem}
 @media (max-width:600px){.logbook{padding:24px 18px;border-radius:0}}
 @media print{body{background:none}.logbook{box-shadow:none;padding:0;max-width:none}}"""
@@ -91,6 +93,11 @@ h2{font-size:1.35rem;margin:0 0 12px;color:var(--accent);font-weight:600}
                     append("<section class=\"lb-entry\"><h2>${i + 1}. ${esc(ex.title)}</h2>")
                     if (photos.isNotEmpty()) append("<div class=\"lb-photos\">$photos</div>")
                     append("<p>${esc(e?.narrative.orEmpty())}</p>")
+                    if (ex.notes.isNotEmpty()) {
+                        append("<div class=\"lb-notes\"><strong>${esc(labels.notes)}</strong><ul>")
+                        ex.notes.forEach { append("<li>&bdquo;${esc(it.text)}&ldquo;</li>") }
+                        append("</ul></div>")
+                    }
                     if (!e?.takeaway.isNullOrBlank()) {
                         append("<p class=\"lb-takeaway\"><strong>${esc(labels.takeaway)}</strong>${esc(e.takeaway)}</p>")
                     }
@@ -273,6 +280,11 @@ object PdfExporter {
                     w.y += ph + 14f
                 }
                 w.text(e?.narrative.orEmpty(), body, after = 8f)
+                if (ex.notes.isNotEmpty()) {
+                    w.text(labels.notes.uppercase(v.lang.locale()), paint(9f, MUTED, serif = false), after = 2f)
+                    ex.notes.forEach { w.text("„${it.text}“", paint(12f, INK, italic = true), after = 2f, inset = 10f) }
+                    w.y += 8f
+                }
                 if (!e?.takeaway.isNullOrBlank()) {
                     val label = paint(9f, MUTED, serif = false)
                     val take = paint(12f, INK, italic = true)

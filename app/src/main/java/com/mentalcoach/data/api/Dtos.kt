@@ -2,6 +2,7 @@ package com.mentalcoach.data.api
 
 import com.mentalcoach.domain.ChatTurn
 import com.mentalcoach.domain.CheckinReading
+import com.mentalcoach.domain.ExerciseNote
 import com.mentalcoach.domain.Logbook
 import com.mentalcoach.domain.Suggestion
 import com.mentalcoach.domain.Visit
@@ -19,6 +20,7 @@ data class ExerciseRecord(
     val endedAt: String? = null,
     val chat: List<ChatTurn> = emptyList(),
     val moodNow: Int? = null,
+    val notes: List<ExerciseNote> = emptyList(),
 )
 
 @Serializable
@@ -42,7 +44,7 @@ data class SessionPayload(
                 checkin = v.checkin,
                 exercises =
                     v.exercises.map {
-                        ExerciseRecord(it.exerciseId, it.title, it.startedAt, it.endedAt, it.chat, it.moodNow)
+                        ExerciseRecord(it.exerciseId, it.title, it.startedAt, it.endedAt, it.chat, it.moodNow, it.notes)
                     },
             )
     }

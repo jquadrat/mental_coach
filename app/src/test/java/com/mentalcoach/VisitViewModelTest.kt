@@ -271,6 +271,76 @@ class VisitViewModelTest {
         }
 
     @Test
+    fun photosAreOptionalAndPendingWordsAreKept() =
+        runTest(dispatcher) {
+            val vm = vm()
+            checkIn(vm)
+            vm.startExercise()
+            advanceUntilIdle()
+            vm.updateNoteDraft("My shoulders feel heavy")
+            vm.addNote()
+            advanceUntilIdle()
+            vm.updateNoteDraft("  said but not saved  ")
+            vm.endExercise()
+            advanceUntilIdle()
+            val run = vm.state.value.visit!!.exercises.first()
+            assertEquals(Screen.CHAT, vm.state.value.screen)
+            assertTrue(run.photos.isEmpty())
+            assertEquals(listOf("My shoulders feel heavy", "said but not saved"), run.notes.map { it.text })
+            assertTrue(run.notes.all { it.step == null })
+            assertEquals("", vm.state.value.noteDraft)
+            assertEquals("Thank you.", speech.spoken[speech.spoken.size - 2])
+        }
+
+    @Test
+    fun groundingGoesStepByStepWithSpokenAnswersOrPhotos() =
+        runTest(dispatcher) {
+            val vm = vm()
+            checkIn(vm, mood = "I feel overwhelmed")
+            var run = vm.state.value.visit!!.current!!
+            assertEquals("grounding-54321", run.exerciseId)
+            assertTrue(run.guided)
+            vm.startExercise()
+            advanceUntilIdle()
+            assertTrue(speech.spoken.last().startsWith("Step 1 of 5."))
+
+            vm.updateNoteDraft("A plant, the window, my shoes, a lamp, a cup")
+            vm.addNote()
+            advanceUntilIdle()
+            run = vm.state.value.visit!!.current!!
+            assertEquals(1, run.stepIndex)
+            assertEquals(0, run.notes.single().step)
+            assertTrue(speech.spoken.last().startsWith("Thank you. Step 2 of 5."))
+
+            // A photo answers the step too.
+            vm.onExercisePhoto(File("x"), false)
+            advanceUntilIdle()
+            assertEquals(2, vm.state.value.visit!!.current!!.stepIndex)
+
+            vm.goToStep(4)
+            advanceUntilIdle()
+            vm.updateNoteDraft("Peppermint")
+            vm.addNote()
+            advanceUntilIdle()
+            run = vm.state.value.visit!!.current!!
+            assertEquals(4, run.stepIndex) // stays on the last step
+            assertEquals(listOf(0, 4), run.notes.map { it.step })
+            assertEquals("Thank you.", speech.spoken.last())
+
+            vm.endExercise()
+            advanceUntilIdle()
+            say(vm, "calmer")
+            // The notes reach the coach (text only).
+            assertTrue(
+                com.mentalcoach.data.api.SessionPayload
+                    .from(vm.state.value.visit!!)
+                    .exercises[0]
+                    .notes
+                    .any { it.text == "Peppermint" },
+            )
+        }
+
+    @Test
     fun resumesAVisitAfterProcessDeath() =
         runTest(dispatcher) {
             val first = vm()

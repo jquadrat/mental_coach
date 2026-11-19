@@ -80,6 +80,7 @@
   {
     "id": "grounding-54321",
     "minutes": 5,
+    "guided": true,
     "goodFor": "anxiety, feeling overwhelmed or disconnected, dissociation; brings attention to the present",
     "title": { "en": "5-4-3-2-1 grounding", "de": "5-4-3-2-1 Erdung" },
     "steps": {

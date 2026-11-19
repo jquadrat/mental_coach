@@ -6,6 +6,7 @@ import com.mentalcoach.data.db.VisitDao
 import com.mentalcoach.data.db.VisitEntity
 import com.mentalcoach.domain.ChatTurn
 import com.mentalcoach.domain.CheckinReading
+import com.mentalcoach.domain.ExerciseNote
 import com.mentalcoach.domain.ExerciseRun
 import com.mentalcoach.domain.Lang
 import com.mentalcoach.domain.Logbook
@@ -44,6 +45,9 @@ class RoomVisitRepository(
                     minutes = r.minutes,
                     steps = r.steps,
                     photoPrompts = r.photoPrompts,
+                    guided = r.guided,
+                    stepIndex = r.stepIndex,
+                    notes = json.decodeFromString<List<ExerciseNote>>(r.notesJson),
                     startedAt = r.startedAt,
                     endedAt = r.endedAt,
                     photos = r.photoPaths,
@@ -96,6 +100,9 @@ class RoomVisitRepository(
                 ExerciseRunEntity(
                     visit.id, i, r.exerciseId, r.title, r.intro, r.minutes, r.steps, r.photoPrompts,
                     r.startedAt, r.endedAt, r.photos, r.selected, r.moodNow,
+                    guided = r.guided,
+                    stepIndex = r.stepIndex,
+                    notesJson = json.encodeToString(r.notes),
                 )
             }
         val turns =
